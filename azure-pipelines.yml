@@ -7,7 +7,7 @@ pr:
 
 variables:
   BuildConfiguration: 'Release'
-  Project: 'FIAP.Hackaton.OES.User.API/FIAP.Hackaton.OES.User.API.csproj'
+  Project: 'FIAP.Hackathon.OES.User.API/FIAP.Hackathon.OES.User.API.csproj'
   ArtifactName: 'drop'
   PublishDir: '$(Build.ArtifactStagingDirectory)/$(BuildConfiguration)'
 
