@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="FIAP.Hackaton.OES.User.API/FIAP.Hackaton.OES.User.API.csproj" />
+  <Project Path="FIAP.Hackaton.OES.User.Domain/FIAP.Hackaton.OES.User.Domain.csproj" Id="35860712-146c-4e1e-8d0a-357c3bd72566" />
+  <Project Path="FIAP.Hackaton.OES.User.Infra/FIAP.Hackaton.OES.User.Infra.csproj" Id="23e33e8a-77f9-4e8c-8c0b-9341e9756af9" />
+  <Project Path="FIAP.Hackaton.OES.User.Service/FIAP.Hackaton.OES.User.Service.csproj" Id="da16080a-3ce9-4e55-81bd-4b0d1384ba0e" />
+</Solution>

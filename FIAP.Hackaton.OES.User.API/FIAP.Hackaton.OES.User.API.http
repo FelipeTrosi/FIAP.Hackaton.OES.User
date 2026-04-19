@@ -1,0 +1,6 @@
+@FIAP.Hackaton.OES.User.API_HostAddress = http://localhost:5142
+
+GET {{FIAP.Hackaton.OES.User.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
