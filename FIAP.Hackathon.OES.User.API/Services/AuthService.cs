@@ -1,6 +1,9 @@
 ﻿using FIAP.Hackathon.OES.User.Domain.Enums.User;
+using FIAP.Hackathon.OES.User.Service.Exceptions;
 using FIAP.Hackathon.OES.User.Service.Interfaces;
+using FIAP.Hackathon.OES.User.Service.ServiceToken;
 using IAP.Hackathon.OES.User.Service.Dto.Login;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -29,6 +32,17 @@ public class AuthService(IConfiguration configuration, IUserService service) : I
 
     }
 
+    public string WorkerLogin(ServiceTokenRequest request)
+    {
+        var configuredClientId = _configuration["ServiceAuth:ClientId"];
+        var configuredClientSecret = _configuration["ServiceAuth:ClientSecret"];
+
+        if (request.ClientId != configuredClientId || request.ClientSecret != configuredClientSecret)
+            throw new BadRequestException("Credenciais de serviço inválidas.", new Dictionary<string, string[]> { { "ClientId/Secret", new[] { "Credenciais de serviço inválidas. ClientId e/ou ClientSecret" } } });
+
+        return GenerateJwtToken("donation-worker", "WORKER");
+    }
+
     private string GenerateJwtToken(string userId, string role)
     {
         var claims = new[]
@@ -48,5 +62,8 @@ public class AuthService(IConfiguration configuration, IUserService service) : I
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+  
+
 
 }
