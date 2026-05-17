@@ -36,6 +36,12 @@ public class UserService(IBaseLogger<UserService> logger, IUserRepository reposi
             errors["Senha"] = ["Senha deve conter letras, números e caracteres especiais, com pelo menos 8 caracteres."];
         }
 
+        if (!ValidatorService.IsValidCpf(entity.CPF))
+        {
+            _logger.LogError("CPF inválido.");
+            errors["Senha"] = ["CPF inválido."];
+        }        
+
         if (errors.Any())
             throw new BadRequestException("Erro de validação", errors);
 
@@ -109,6 +115,12 @@ public class UserService(IBaseLogger<UserService> logger, IUserRepository reposi
         {
             _logger.LogError("Senha deve conter letras, números e caracteres especiais, com pelo menos 8 caracteres.");
             errors["Senha"] = ["Senha deve conter letras, números e caracteres especiais, com pelo menos 8 caracteres."];
+        }
+
+        if (!ValidatorService.IsValidCpf(entity.CPF))
+        {
+            _logger.LogError("CPF inválido.");
+            errors["Senha"] = ["CPF inválido."];
         }
 
         if (errors.Any())
