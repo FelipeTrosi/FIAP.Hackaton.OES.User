@@ -22,7 +22,7 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="200">Login realizado com sucesso.</response>
     /// <response code="401">Credenciais inválidas.</response>
     [HttpPost("Login")]
-    public IActionResult Login([FromBody] LoginDto input)
+    public async Task<IActionResult> Login([FromBody] LoginDto input)
     {
         return Ok(new { token = _authService.Login(input) });
     }
@@ -34,9 +34,9 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="200">Usuário criado com sucesso.</response>
     /// <response code="400">Dados inválidos.</response>
     [HttpPost]
-    public IActionResult Post([FromBody] UserCreateDto input)
+    public async Task<IActionResult> Post([FromBody] UserCreateDto input)
     {
-        _service.Create(input);
+        await _service.Create(input);
         return Ok();
     }
 
@@ -48,9 +48,9 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="404">Usuário não encontrado.</response>
     [HttpPut]
     [Authorize(Policy = "MANAGER")]
-    public IActionResult Put([FromBody] UserUpdateDto input)
+    public async Task<IActionResult> Put([FromBody] UserUpdateDto input)
     {
-        _service.Update(input);
+        await _service.Update(input);
         return Ok();
     }
 
@@ -62,7 +62,7 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="404">Usuário não encontrado.</response>
     [HttpDelete("{id:long}")]
     [Authorize(Policy = "MANAGER")]
-    public IActionResult Delete(long id)
+    public async Task<IActionResult> Delete(long id)
     {
         _service.DeleteById(id);
         return Ok();
@@ -76,7 +76,7 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="404">Usuário não encontrado.</response>
     [HttpGet("GetById/{id:long}")]
     [Authorize(Policy = "MANAGER")]
-    public IActionResult GetById(long id)
+    public async Task<IActionResult> GetById(long id)
     {
         return Ok(_service.GetById(id));
     }
@@ -87,7 +87,7 @@ public class UserController(IUserService service, IAuthService authService) : Co
     /// <response code="200">Lista de usuários retornada com sucesso.</response>
     [HttpGet("GetAll")]
     [Authorize(Policy = "MANAGER")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         return Ok(_service.GetAll());
     }

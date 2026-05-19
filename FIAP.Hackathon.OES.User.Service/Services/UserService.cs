@@ -39,7 +39,7 @@ public class UserService(IBaseLogger<UserService> logger, IUserRepository reposi
         if (!ValidatorService.IsValidCpf(entity.CPF))
         {
             _logger.LogError("CPF inválido.");
-            errors["Senha"] = ["CPF inválido."];
+            errors["CPF"] = ["CPF inválido."];
         }        
 
         if (errors.Any())
@@ -99,7 +99,7 @@ public class UserService(IBaseLogger<UserService> logger, IUserRepository reposi
         }
     }
 
-    public void Update(UserUpdateDto entity)
+    public async Task Update(UserUpdateDto entity)
     {
         var errors = new Dictionary<string, string[]>();
 

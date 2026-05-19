@@ -30,41 +30,33 @@ namespace FIAP.Hackathon.OES.User.Service.Util
 
         public static bool IsValidCpf(string? cpf)
         {
-            if (string.IsNullOrWhiteSpace(cpf))
-                return false;
+            cpf = Regex.Replace(cpf, @"\D", "");
 
-            cpf = Regex.Replace(cpf, @"[^\d]", "");
-            
             if (cpf.Length != 11)
                 return false;
 
             if (cpf.Distinct().Count() == 1)
                 return false;
-            
-            int soma = 0;
 
-            for (int i = 0; i < 9; i++)
-            {
-                soma += (cpf[i] - '0') * (10 - i);
-            }
-
-            int resto = soma % 11;
-            int primeiroDigito = resto < 2 ? 0 : 11 - resto;
-
-            if ((cpf[9] - '0') != primeiroDigito)
+            if (!ValidateDigit(cpf, 9))
                 return false;
 
-            soma = 0;
+            if (!ValidateDigit(cpf, 10))
+                return false;
 
-            for (int i = 0; i < 10; i++)
-            {
-                soma += (cpf[i] - '0') * (11 - i);
-            }
+            return true;
+        }
 
-            resto = soma % 11;
-            int segundoDigito = resto < 2 ? 0 : 11 - resto;
+        private static bool ValidateDigit(string cpf, int length)
+        {
+            int sum = 0;
+            for (int i = 0; i < length; i++)
+                sum += (cpf[i] - '0') * (length + 1 - i);
 
-            return (cpf[10] - '0') == segundoDigito;
+            int remainder = sum % 11;
+            int digit = remainder < 2 ? 0 : 11 - remainder;
+
+            return (cpf[length] - '0') == digit;
         }
 
     }
